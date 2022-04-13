@@ -9,7 +9,11 @@
   "scripts": {
     "start": "fastify start -l info -a 0.0.0.0 dist/app.js",
     "dev": "tsc && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js\"",
-    "build": "tsc"
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "lint": "eslint --ext .jsx,.js,.tsx,.ts src/",
+    "format:check": "prettier --check './**/*.{ts,tsx}'"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +30,11 @@
     "fastify-sensible": "^3.1.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2",
     "@tsconfig/node14": "^1.0.1",
     "concurrently": "^7.1.0",
     "prisma": "^3.11.0",
