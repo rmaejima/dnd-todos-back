@@ -1,6 +1,6 @@
 import { Todo } from "@prisma/client";
 import { FastifyPluginAsync } from "fastify";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 import { TodoCreateRequest, TodoCreateRequestSchema } from "../../types/todo";
 
 const root: FastifyPluginAsync = async (fastify) => {
@@ -15,9 +15,17 @@ const root: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (request, reply) => {
-      console.log(request.body);
+      const reqBody = request.body;
       const todo = await prisma.todo.create({
-        data: request.body,
+        data: {
+          title: reqBody.title,
+          tags: {
+            connect: reqBody.tags ?? [],
+          },
+        },
+        include: {
+          tags: true,
+        },
       });
 
       reply.send(todo);
