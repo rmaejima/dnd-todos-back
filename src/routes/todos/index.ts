@@ -1,14 +1,14 @@
-import { Todo } from "@prisma/client";
-import { FastifyPluginAsync } from "fastify";
-import { prisma } from "../../utils/prisma";
-import { TodoCreateRequest, TodoCreateRequestSchema } from "../../types/todo";
+import { Todo } from '@prisma/client';
+import { FastifyPluginAsync } from 'fastify';
+import { prisma } from '../../utils/prisma';
+import { TodoCreateRequest, TodoCreateRequestSchema } from '../../types/todo';
 
 const root: FastifyPluginAsync = async (fastify) => {
   fastify.post<{
     Body: TodoCreateRequest;
     Reply: Todo;
   }>(
-    "/",
+    '/',
     {
       schema: {
         body: TodoCreateRequestSchema,
@@ -29,7 +29,7 @@ const root: FastifyPluginAsync = async (fastify) => {
       });
 
       reply.send(todo);
-    }
+    },
   );
 };
 

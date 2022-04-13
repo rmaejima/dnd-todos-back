@@ -1,5 +1,5 @@
-import { Static, Type } from "@sinclair/typebox";
-import { nullable } from "../utils/typbox";
+import { Static, Type } from '@sinclair/typebox';
+import { nullable } from '../utils/typbox';
 
 export const TodoCreateRequestSchema = Type.Object({
   title: Type.String(),

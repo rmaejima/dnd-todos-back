@@ -1,8 +1,8 @@
-import { FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync } from 'fastify';
 
 const root: FastifyPluginAsync = async (fastify) => {
-  fastify.get("/", async (_, reply) => {
-    reply.send("Hello world!");
+  fastify.get('/', async (_, reply) => {
+    reply.send('Hello world!');
   });
 };
 
