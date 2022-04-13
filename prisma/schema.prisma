@@ -11,6 +11,16 @@ datasource db {
 }
 
 model Todo {
-  id   Int    @id @default(autoincrement())
-  name String
+  id        Int      @id @default(autoincrement())
+  title     String
+  tags      Tag[]
+  finished  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Tag {
+  title String @id
+  color String
+  todos Todo[]
 }
