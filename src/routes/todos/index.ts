@@ -27,6 +27,7 @@ const root: FastifyPluginAsync = async (fastify) => {
           tags: true,
         },
       });
+      // TODO: connection error のハンドリング
 
       reply.send(todo);
     },
