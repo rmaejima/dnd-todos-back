@@ -1,17 +1,48 @@
 import { Todo } from '@prisma/client';
 import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../../utils/prisma';
-import { TodoCreateRequest, TodoCreateRequestSchema } from '../../types/todo';
+import {
+  TodoCreateRequest,
+  TodoCreateRequestSchema,
+  TodoPayload,
+  TodoSchema,
+} from '../../types/todo';
+import { serializeDateProps } from '../../utils/serializeDate';
+import { Type } from '@sinclair/typebox';
 
 const root: FastifyPluginAsync = async (fastify) => {
+  // Get all todos API
+  fastify.get<{
+    Reply: TodoPayload[];
+  }>(
+    '/',
+    {
+      schema: {
+        response: { 200: Type.Array(TodoSchema) },
+      },
+    },
+    async (_, reply) => {
+      const todos = await prisma.todo.findMany({
+        include: {
+          tags: true,
+        },
+      });
+
+      const response = todos.map(serializeDateProps);
+      reply.send(response);
+    },
+  );
+
+  // Post todo API
   fastify.post<{
     Body: TodoCreateRequest;
-    Reply: Todo;
+    Reply: TodoPayload;
   }>(
     '/',
     {
       schema: {
         body: TodoCreateRequestSchema,
+        response: { 200: TodoSchema },
       },
     },
     async (request, reply) => {
@@ -29,7 +60,7 @@ const root: FastifyPluginAsync = async (fastify) => {
       });
       // TODO: connection error のハンドリング
 
-      reply.send(todo);
+      reply.send(serializeDateProps(todo));
     },
   );
 };
