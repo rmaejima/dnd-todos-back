@@ -20,7 +20,8 @@ model Todo {
 }
 
 model Tag {
-  title String @id
+  id    Int    @id @default(autoincrement())
+  title String
   color String
   todos Todo[]
 }
