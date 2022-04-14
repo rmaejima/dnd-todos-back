@@ -1,12 +1,5 @@
 import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../../utils/prisma';
-import {
-  TodoCreateRequest,
-  TodoCreateRequestSchema,
-  TodoPayload,
-  TodoSchema,
-} from '../../types/todo';
-import { serializeDateProps } from '../../utils/serializeDate';
 import { Type } from '@sinclair/typebox';
 import { Tag } from '@prisma/client';
 import { TagSchema } from '../../types/tag';
