@@ -1,4 +1,3 @@
-import { Todo } from '@prisma/client';
 import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../../utils/prisma';
 import {
