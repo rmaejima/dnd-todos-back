@@ -15,6 +15,7 @@ model Todo {
   title     String
   tags      Tag[]
   finished  Boolean  @default(false)
+  archived  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
