@@ -11,7 +11,7 @@ import { serializeDateProps } from '../../utils/serializeDate';
 import { Type } from '@sinclair/typebox';
 
 const root: FastifyPluginAsync = async (fastify) => {
-  // Get all todos API
+  // Get all not archived todos API
   fastify.get<{
     Reply: TodoPayload[];
   }>(
@@ -23,6 +23,10 @@ const root: FastifyPluginAsync = async (fastify) => {
     },
     async (_, reply) => {
       const todos = await prisma.todo.findMany({
+        where: {
+          finished: false,
+          archived: false,
+        },
         include: {
           tags: true,
         },
