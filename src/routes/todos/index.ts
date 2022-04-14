@@ -30,6 +30,9 @@ const root: FastifyPluginAsync = async (fastify) => {
         include: {
           tags: true,
         },
+        orderBy: {
+          updatedAt: 'desc',
+        },
       });
 
       const response = todos.map(serializeDateProps);
