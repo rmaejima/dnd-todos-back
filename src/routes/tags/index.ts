@@ -2,7 +2,12 @@ import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../../utils/prisma';
 import { Type } from '@sinclair/typebox';
 import { Tag } from '@prisma/client';
-import { TagPayload, TagSchema } from '../../types/tag';
+import {
+  TagCreateRequest,
+  TagCreateRequestSchema,
+  TagPayload,
+  TagSchema,
+} from '../../types/tag';
 
 const root: FastifyPluginAsync = async (fastify) => {
   // Get all tags API
@@ -26,6 +31,26 @@ const root: FastifyPluginAsync = async (fastify) => {
         },
       });
       reply.send(allTags);
+    },
+  );
+
+  // Create tag API
+  fastify.post<{
+    Body: TagCreateRequest;
+    Reply: Tag;
+  }>(
+    '/',
+    {
+      schema: {
+        body: TagCreateRequestSchema,
+      },
+    },
+    async (request, reply) => {
+      const reqBody = request.body;
+      const response = await prisma.tag.create({
+        data: reqBody,
+      });
+      reply.send(response);
     },
   );
 };
