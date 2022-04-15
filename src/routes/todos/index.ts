@@ -7,24 +7,33 @@ import {
   TodoSchema,
 } from '../../types/todo';
 import { serializeDateProps } from '../../utils/serializeDate';
-import { Type } from '@sinclair/typebox';
+import { Static, Type } from '@sinclair/typebox';
+
+const TodoGetQuerySchema = Type.Object({
+  finished: Type.ReadonlyOptional(Type.Boolean()),
+  archived: Type.ReadonlyOptional(Type.Boolean()),
+});
+type TodoGetQuery = Static<typeof TodoGetQuerySchema>;
 
 const root: FastifyPluginAsync = async (fastify) => {
   // Get all not archived todos API
   fastify.get<{
+    Querystring: TodoGetQuery;
     Reply: TodoPayload[];
   }>(
     '/',
     {
       schema: {
+        querystring: TodoGetQuerySchema,
         response: { 200: Type.Array(TodoSchema) },
       },
     },
-    async (_, reply) => {
+    async (request, reply) => {
+      console.log(request.query.finished);
       const todos = await prisma.todo.findMany({
         where: {
-          finished: false,
-          archived: false,
+          finished: request.query.finished ?? false,
+          archived: request.query.archived ?? false,
         },
         include: {
           tags: true,
