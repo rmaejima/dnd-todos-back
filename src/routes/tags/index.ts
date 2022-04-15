@@ -2,12 +2,12 @@ import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../../utils/prisma';
 import { Type } from '@sinclair/typebox';
 import { Tag } from '@prisma/client';
-import { TagSchema } from '../../types/tag';
+import { TagPayload, TagSchema } from '../../types/tag';
 
 const root: FastifyPluginAsync = async (fastify) => {
   // Get all tags API
   fastify.get<{
-    Reply: Tag[];
+    Reply: TagPayload[];
   }>(
     '/',
     {
@@ -16,7 +16,15 @@ const root: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (_, reply) => {
-      const allTags = await prisma.tag.findMany();
+      const allTags = await prisma.tag.findMany({
+        include: {
+          todos: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
       reply.send(allTags);
     },
   );
