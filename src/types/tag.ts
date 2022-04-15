@@ -7,3 +7,6 @@ export const TagSchema = Type.Object({
   todos: Type.Array(Type.Object({ id: Type.Number() })),
 });
 export type TagPayload = Static<typeof TagSchema>;
+
+export const TagCreateRequestSchema = Type.Pick(TagSchema, ['title', 'color']);
+export type TagCreateRequest = Static<typeof TagCreateRequestSchema>;
