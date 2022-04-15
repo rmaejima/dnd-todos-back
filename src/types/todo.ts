@@ -9,7 +9,7 @@ export const TodoSchema = Type.Object({
   archived: Type.Boolean(),
   createdAt: Type.String({ format: 'date-time' }),
   updatedAt: Type.String({ format: 'date-time' }),
-  tags: Type.Array(TagSchema),
+  tags: Type.Array(Type.Omit(TagSchema, ['todos'])),
 });
 export type TodoPayload = Static<typeof TodoSchema>;
 
