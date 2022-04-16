@@ -1,24 +1,33 @@
-# Getting Started with Fastify-CLI [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
-
-This project was bootstrapped with Fastify-CLI.
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev`
-
-To start the app in dev mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### `npm start`
-
-For production mode
-
-### `npm run test`
-
-Run the test cases.
-
-## Learn More
-
-To learn Fastify, check out the [Fastify documentation](https://www.fastify.io/docs/latest/).
+# Wantedly Todos Back
+## 実行環境
+- Node.js: v16.18.0
+- Fastify(TypeScript)
+- postgresQL
+- prisma
+- Docker
+## 実行手順
+1. 環境変数を設定します。
+```
+cp .env.sample .env
+```
+2. postgresQLのDockerコンテナを立ち上げます。
+```
+docker-compose up -d
+```
+3. パッケージをインストールします。
+```
+yarn
+```
+4. データベースのマイグレーションを行います。
+```
+npx prisma migrate dev
+```
+5. アプリを立ち上げます。
+```
+yarn dev
+```
+## 補足
+以下のコマンド実行することで、`localhost:5555`番にデータベースクライアントサービスが立ち上がり、データベースの値を変更することができます。
+```
+npx prisma studio
+```
