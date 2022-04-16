@@ -7,7 +7,7 @@ type BaseParamsDictionary = {
 };
 
 const index: FastifyPluginAsync = async (fastify) => {
-  // Delete achievement API
+  // Delete tag API
   fastify.delete<{
     Params: BaseParamsDictionary;
   }>('/', async (request, reply) => {
