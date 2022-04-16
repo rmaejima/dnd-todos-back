@@ -18,3 +18,6 @@ export const TodoCreateRequestSchema = Type.Object({
   tags: nullable(Type.Array(Type.Object({ id: Type.Number() }))),
 });
 export type TodoCreateRequest = Static<typeof TodoCreateRequestSchema>;
+
+export const TodoFinishRequestSchema = Type.Pick(TodoSchema, ['id']);
+export type TodoFinishRequest = Static<typeof TodoFinishRequestSchema>;
