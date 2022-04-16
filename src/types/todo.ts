@@ -19,6 +19,9 @@ export const TodoCreateRequestSchema = Type.Object({
 });
 export type TodoCreateRequest = Static<typeof TodoCreateRequestSchema>;
 
+export const TodoUpdateRequestSchema = TodoCreateRequestSchema;
+export type TodoUpdateRequest = Static<typeof TodoUpdateRequestSchema>;
+
 export const TodoFinishRequestSchema = Type.Pick(TodoSchema, ['id']);
 export type TodoFinishRequest = Static<typeof TodoFinishRequestSchema>;
 
