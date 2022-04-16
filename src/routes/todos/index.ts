@@ -8,6 +8,7 @@ import {
 } from '../../types/todo';
 import { serializeDateProps } from '../../utils/serializeDate';
 import { Static, Type } from '@sinclair/typebox';
+import { getTodoMaxOrder } from '../../utils/todo';
 
 const TodoGetQuerySchema = Type.Object({
   finished: Type.ReadonlyOptional(Type.Boolean()),
@@ -29,7 +30,6 @@ const root: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (request, reply) => {
-      console.log(request.query.finished);
       const todos = await prisma.todo.findMany({
         where: {
           finished: request.query.finished ?? false,
@@ -39,7 +39,7 @@ const root: FastifyPluginAsync = async (fastify) => {
           tags: true,
         },
         orderBy: {
-          updatedAt: 'desc',
+          order: 'asc',
         },
       });
 
@@ -62,9 +62,13 @@ const root: FastifyPluginAsync = async (fastify) => {
     },
     async (request, reply) => {
       const reqBody = request.body;
+
+      const maxOrder = await getTodoMaxOrder();
+
       const todo = await prisma.todo.create({
         data: {
           title: reqBody.title,
+          order: maxOrder ? maxOrder + 1 : 1,
           tags: {
             connect: reqBody.tags ?? [],
           },

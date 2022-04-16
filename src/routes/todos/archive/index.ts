@@ -7,6 +7,10 @@ import {
 } from '../../../types/todo';
 import { prisma } from '../../../utils/prisma';
 import { serializeDateProps } from '../../../utils/serializeDate';
+import {
+  decrementAllOrderLargerThanCursor,
+  getTodoMaxOrder,
+} from '../../../utils/todo';
 
 const root: FastifyPluginAsync = async (fastify) => {
   // Archive todo API
@@ -19,12 +23,28 @@ const root: FastifyPluginAsync = async (fastify) => {
       },
     },
     async (request, reply) => {
-      const todo = await prisma.todo.update({
+      const reqBody = request.body;
+      const maxOrder = await getTodoMaxOrder();
+
+      //アーカイブされたTODOよりもOrderが大きいものを全て-1する
+      const todo = await prisma.todo.findUnique({
         where: {
-          id: request.body.id,
+          id: reqBody.id,
+        },
+      });
+      if (todo == null) {
+        throw fastify.httpErrors.notFound('TODOがありません');
+      }
+      await decrementAllOrderLargerThanCursor(todo.order);
+
+      // アーカイブされたTODOのOrderは最後尾にする
+      const updatedTodo = await prisma.todo.update({
+        where: {
+          id: reqBody.id,
         },
         data: {
           archived: true,
+          order: maxOrder ?? 1,
         },
         include: {
           tags: true,
@@ -32,7 +52,7 @@ const root: FastifyPluginAsync = async (fastify) => {
       });
       // TODO: エラーハンドリング
 
-      reply.send(serializeDateProps(todo));
+      reply.send(serializeDateProps(updatedTodo));
     },
   );
 };
