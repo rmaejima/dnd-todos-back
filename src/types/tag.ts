@@ -10,3 +10,6 @@ export type TagPayload = Static<typeof TagSchema>;
 
 export const TagCreateRequestSchema = Type.Pick(TagSchema, ['title', 'color']);
 export type TagCreateRequest = Static<typeof TagCreateRequestSchema>;
+
+export const TagUpdateRequestSchema = TagCreateRequestSchema;
+export type TagUpdateRequest = Static<typeof TagUpdateRequestSchema>;
