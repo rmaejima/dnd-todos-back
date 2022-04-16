@@ -27,3 +27,6 @@ export type TodoFinishRequest = Static<typeof TodoFinishRequestSchema>;
 
 export const TodoArchiveRequestSchema = TodoFinishRequestSchema;
 export type TodoArchiveRequest = TodoFinishRequest;
+
+export const TodoUndoRequestSchema = TodoFinishRequestSchema;
+export type TodoUndoRequest = TodoFinishRequest;
