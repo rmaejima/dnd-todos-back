@@ -10,7 +10,7 @@ import { serializeDateProps } from '../../../utils/serializeDate';
 
 const root: FastifyPluginAsync = async (fastify) => {
   // Finish todo API
-  fastify.post<{ Body: TodoFinishRequest; Reply: TodoPayload }>(
+  fastify.put<{ Body: TodoFinishRequest; Reply: TodoPayload }>(
     '/',
     {
       schema: {
