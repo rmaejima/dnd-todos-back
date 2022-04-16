@@ -5,6 +5,7 @@ import { TagSchema } from './tag';
 export const TodoSchema = Type.Object({
   id: Type.Number(),
   title: Type.String(),
+  order: Type.Integer(),
   finished: Type.Boolean(),
   archived: Type.Boolean(),
   createdAt: Type.String({ format: 'date-time' }),
@@ -30,3 +31,10 @@ export type TodoArchiveRequest = TodoFinishRequest;
 
 export const TodoUndoRequestSchema = TodoFinishRequestSchema;
 export type TodoUndoRequest = TodoFinishRequest;
+
+export const TodoChangeOrderRequestSchema = Type.Object({
+  todos: Type.Array(Type.Pick(TodoSchema, ['id', 'order'])),
+});
+export type TodoChangeOrderRequest = Static<
+  typeof TodoChangeOrderRequestSchema
+>;
