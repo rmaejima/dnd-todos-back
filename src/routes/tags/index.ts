@@ -29,6 +29,12 @@ const root: FastifyPluginAsync = async (fastify) => {
             },
           },
         },
+        // TODOと多く紐づいている順にソート
+        orderBy: {
+          todos: {
+            _count: 'desc',
+          },
+        },
       });
       reply.send(allTags);
     },
