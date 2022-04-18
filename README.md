@@ -31,3 +31,6 @@ yarn dev
 ```
 npx prisma studio
 ```
+
+## 工夫した点
+wantedly-todos-frontの方で記載しております。
