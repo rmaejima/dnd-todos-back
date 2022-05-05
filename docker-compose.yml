@@ -9,5 +9,18 @@ services:
       - 5432:5432
     volumes:
       - postgres:/var/lib/postgresql
+  app:
+    image: node:16.8.0
+    environment:
+      FASTIFY_PORT: '${FASTIFY_PORT}'
+      DATABASE_URL: '${DATABASE_URL}'
+    volumes:
+      - type: bind
+        source: ./node
+        target: /node
+    ports:
+      - 8080:8080
+    command: bash -c "cd node && yarn && yarn dev"
+
 volumes:
   postgres:
