@@ -1,4 +1,4 @@
-# Wantedly Todos Back
+# Dnd Todos Back
 ## 実行環境
 - Node.js: v16.18.0
 - Fastify(TypeScript)
@@ -31,6 +31,3 @@ yarn dev
 ```
 npx prisma studio
 ```
-
-## 工夫した点
-wantedly-todos-frontの方で記載しております。
